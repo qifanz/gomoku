@@ -7,7 +7,9 @@ import java.util.Observer;
  * Created by flavi on 2017/10/21.
  */
 public class Controller implements Observer {
+
     Plateau plateau;
+
     public Controller(Plateau plateau) {
         this.plateau=plateau;
 
