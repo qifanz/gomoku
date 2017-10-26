@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="gomoku:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/gomoku_jar</output-path>
+    <root id="archive" name="gomoku.jar">
+      <element id="module-output" name="gomoku" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jpl/jpl/7.4.0/jpl-7.4.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
