@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78242ea7-3658-4841-807b-ac3fe6e99a68" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../src/main/java/Exception/GomokuFinishedException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../src/main/java/IHM/PrologCaller.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/insa/hexa4401/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/IHM/BoardPanel.java" afterPath="$PROJECT_DIR$/../src/main/java/IHM/BoardPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/IHM/Plateau.java" afterPath="$PROJECT_DIR$/../src/main/java/IHM/Plateau.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/IHM/PrologCaller.java" afterPath="$PROJECT_DIR$/../src/main/java/IHM/PrologCaller.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../src/main/java/Main.java" afterPath="$PROJECT_DIR$/../src/main/java/Main.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
