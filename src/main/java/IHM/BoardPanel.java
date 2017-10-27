@@ -57,8 +57,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,MouseListe
         int retVal = fc.showOpenDialog(this);
         if(retVal == JFileChooser.APPROVE_OPTION){
             String dir = fc.getSelectedFile().getAbsolutePath();
+            String[] choices = {"game_java_mm1_b.pl","game_java_mm2_b.pl","game_java_random_b.pl"};
+            String iaFile = (String) JOptionPane.showInputDialog(this,"Which IA to use ?",
+                    "IA selection",JOptionPane.QUESTION_MESSAGE,null,choices,choices[0]);
             try {
-                prologCaller = new PrologCaller(dir);
+                prologCaller = new PrologCaller(dir,iaFile);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {

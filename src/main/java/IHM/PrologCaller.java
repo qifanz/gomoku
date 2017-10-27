@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import Exception.GomokuFinishedException;
 
+import javax.swing.*;
+
 public class PrologCaller {
 
     private int turn = 1;
@@ -15,8 +17,8 @@ public class PrologCaller {
     private Query[] initQuery;
     private Writer writer;
 
-    public PrologCaller(String path) throws FileNotFoundException, UnsupportedEncodingException {
-        Term[] consult_arg1 = {new Atom(path+"\\game_java.pl")};
+    public PrologCaller(String path,String iaFileName) throws FileNotFoundException, UnsupportedEncodingException {
+        Term[] consult_arg1 = {new Atom(path+"\\"+iaFileName)};
         Term[] consult_arg2 = {new Atom(path+"\\detectWin.pl")};
         Term[] consult_arg3 = {new Atom(path+"\\evaluateFunction.pl")};
         Term[] consult_arg4 = {new Atom(path+"\\minmax")};
@@ -45,9 +47,10 @@ public class PrologCaller {
         long start = System.nanoTime();
         Map[] r = q.allSolutions();
         long turnTime = System.nanoTime() - start;
-        System.out.println("Turn "+ (turn++) +" time : "+turnTime/1000000000.0);
+        System.out.println("Turn "+ turn +" time : "+turnTime/1000000000.0);
         try {
-            writer.write(turn+","+turnTime/1000000000.0);
+            writer.write((turn++)+";"+turnTime/1000000000.0+"\r\n");
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

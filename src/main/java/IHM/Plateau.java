@@ -4,7 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 /**
  * Created by flavi on 2017/10/21.
@@ -18,7 +22,7 @@ public class Plateau {
 
     public Plateau (){
         frame=new JFrame("gomoku");
-        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pos=new JLabel[15][15];
         PlateauPanel = new BoardPanel(pos);
         PlateauPanel.validate();
