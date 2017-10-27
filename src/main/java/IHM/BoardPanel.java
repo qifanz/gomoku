@@ -1,10 +1,14 @@
 package IHM;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+
+import Exception.GomokuFinishedException;
 
 public class BoardPanel extends JPanel implements MouseMotionListener,MouseListener{
 
@@ -16,9 +20,12 @@ public class BoardPanel extends JPanel implements MouseMotionListener,MouseListe
     private ImageIcon Black2;
     private ImageIcon White2;
 
-    private boolean blackTurn;
+    private boolean blackTurn = true;
     private JLabel OpaqueWhite;
     private JLabel OpaqueBlack;
+
+    public PrologCaller prologCaller;
+    public HashMap<Integer,Boolean> played;
 
     public BoardPanel(JLabel[][] c)
     {
@@ -32,6 +39,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,MouseListe
         White2 = new ImageIcon(this.getClass().getResource("/white2.png").getFile());
         OpaqueBlack = new JLabel();
         OpaqueWhite = new JLabel();
+        played = new HashMap<Integer, Boolean>();
         bg.setBounds(0,0,800,800);
         bg.setIcon(Board);
         for (int i=0;i<15;i++) {
@@ -43,19 +51,54 @@ public class BoardPanel extends JPanel implements MouseMotionListener,MouseListe
         this.add(OpaqueWhite);
         this.add(OpaqueBlack);
         this.add(bg);
+        final JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setDialogTitle("Please open the prolog directory");
+        int retVal = fc.showOpenDialog(this);
+        if(retVal == JFileChooser.APPROVE_OPTION){
+            String dir = fc.getSelectedFile().getAbsolutePath();
+            try {
+                prologCaller = new PrologCaller(dir);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
     }
 
+    // public methods
+    public void nextMove(){
+        int move = 0;
+        try {
+            move = prologCaller.getNextMove(played);
+        }catch (GomokuFinishedException e){
+            JOptionPane.showMessageDialog(this,e.getMessage(),"Gomoku says...",JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
+        if(move >0) placePiece(move);
+    }
+
+    public void placePiece(int pos){
+        int x,y;
+        x = pos%15;
+        y = pos/15;
+        if(!blackTurn && Cases[x][y].getIcon()==null){
+            Cases[x][y].setBounds(18 + 52 * x, 20 + 52 * y, 35, 35);
+            Cases[x][y].setIcon(White);
+            this.validate();
+            //System.out.println((y+1)+" "+(x+1));
+            played.put(15*y+x,blackTurn);
+            blackTurn = !blackTurn;
+        }
+    }
 
     //mouse listener
 
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
     public void mouseMoved(MouseEvent e) {
-        System.out.println(e.getX()+";"+e.getY()+"case :"+getCaseX(e)+":"+getCaseY(e));
+        //System.out.println(e.getX()+";"+e.getY()+"case :"+getCaseX(e)+":"+getCaseY(e));
         int x = getCaseX(e);
         int y = getCaseY(e);
         if(blackTurn){
@@ -74,12 +117,15 @@ public class BoardPanel extends JPanel implements MouseMotionListener,MouseListe
         Cases[x][y].setBounds(18 + 52 * x, 20 + 52 * y, 35, 35);
         if (blackTurn && Cases[x][y].getIcon()==null) {
             Cases[x][y].setIcon(Black);
+            repaint();
+            this.revalidate();
+            played.put(15*y+x,blackTurn);
             blackTurn = !blackTurn;
+            nextMove();
         }else if (Cases[x][y].getIcon()==null){
             Cases[x][y].setIcon(White);
             blackTurn = !blackTurn;
         }
-        this.validate();
     }
 
     public void mousePressed(MouseEvent e) {
@@ -95,6 +141,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener,MouseListe
     }
 
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void mouseDragged(MouseEvent e) {
 
     }
 
